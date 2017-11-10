@@ -80,7 +80,7 @@
 
 
                 <footer class="modal-card-foot">
-                  <button class="button is-success" :disabled="isDisabled">Guardar</button>
+                  <button class="button is-success" :disabled="isDisabled" @click='saveAlbum'>Guardar</button>
                   <button class="button" @click='isOpenModal = false'>Cancel</button>
                 </footer>
               </div>
@@ -158,7 +158,9 @@
                 isLoading: false,
                 isOpenModal: false,
                 isDisabled: true,
-                isAlbumSelected: false
+                isAlbumSelected: false,
+                currentAlbumSelected: null,
+                selectedAlbums: []
             }
         },
 
@@ -210,6 +212,13 @@
                 console.log(result)
                 this.q = result.title;
                 this.isDisabled = false;
+                this.currentAlbumSelected = result;
+            },
+
+            saveAlbum(){
+                console.log('go to save album ')
+                console.log(this.currentAlbumSelected)
+                this.selectedAlbums.push(this.currentAlbumSelected);
             }
         },
 
@@ -234,10 +243,6 @@
 
 
 <style>
-
-
-
-
 ul {
   list-style-type: none;
   padding: 0;

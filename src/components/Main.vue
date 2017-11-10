@@ -55,7 +55,7 @@
                         </p>
                         
                         <ul class="options-list" style="margin-top: 2px;">
-                            <li class="highlighted" v-for="result in results">
+                            <li class="highlighted" v-for="result in results" @click="selectAlbum(result)">
                                 <article class="media">
                                     <figure class="media-left">
                                         <p class="image is-64x64">
@@ -80,7 +80,7 @@
 
 
                 <footer class="modal-card-foot">
-                  <button class="button is-success">Save changes</button>
+                  <button class="button is-success" :disabled="isDisabled">Guardar</button>
                   <button class="button" @click='isOpenModal = false'>Cancel</button>
                 </footer>
               </div>
@@ -155,7 +155,10 @@
             return{
                 q: '',
                 results: [],
-                isOpenModal: false
+                isLoading: false,
+                isOpenModal: false,
+                isDisabled: true,
+                isAlbumSelected: false
             }
         },
 
@@ -169,6 +172,11 @@
         methods:{
             getResults(){
                 var that = this;
+
+                if(that.isLoading) return false;
+
+                that.isLoading = true;
+
 
                 axios.get(`${api.endpoint}?q=${this.q}&year=${api.year}&format=${api.format}&key=${api.key}&secret=${api.secret}&per_page=5`)
                     .then(function(response){
@@ -193,18 +201,28 @@
                         })
 
                         that.results = data;
+
+                        that.isLoading = false;
                     });
             },
 
-            openModal(){
-
+            selectAlbum(result){
+                console.log(result)
+                this.q = result.title;
+                this.isDisabled = false;
             }
         },
 
         watch:{
             q: function(val, oldval){
-                console.log(val.length)
-                if(val.length < 3) return false;
+                if(val.length < oldval.length){
+                    this.isDisabled = true;
+                }
+                // this.isDisabled = true;
+                if(val.length < 3){
+                    this.results = [];
+                    return false;
+                }
                 console.log('do search')
                 this.getResults();
             }
@@ -259,9 +277,15 @@ ul.options-list li {
   cursor: pointer;
 }
 
+
 ul.options-list li.highlighted {
   background: #f8f8f8
 }
+
+ul.options-list li:hover{
+    background: #e5e5e5;
+}
+
 
 
 /** LIGHTBOX MARKUP **/

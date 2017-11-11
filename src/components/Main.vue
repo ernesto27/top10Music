@@ -1,6 +1,6 @@
 <template>
 
-    <div>
+    <div style="padding-left:10px">
         <section class="hero is-info is-medium is-bold">
             <div class="hero-head">
               <nav class="navbar">
@@ -35,7 +35,9 @@
       <section class="container" style="margin-top:30px">
         <div>
 
-            <a class="button is-primary" @click="isOpenModal = true">Seleccionar disco</a>
+            <button class="button is-primary" @click="openModal" >Agregar disco</button>
+            <br />
+            <p>Seleccionados: {{selectedAlbums.length}} de 10</p>
 
             <div class="modal is-activef " v-bind:class="{'is-active': isOpenModal}">
               <div class="modal-background"></div>
@@ -53,7 +55,7 @@
                                 v-model="q"
                             >
                         </p>
-                        
+
                         <ul class="options-list" style="margin-top: 2px;">
                             <li class="highlighted" v-for="result in results" @click="selectAlbum(result)">
                                 <article class="media">
@@ -61,9 +63,9 @@
                                         <p class="image is-64x64">
                                             <img :src="result.thumb">
                                         </p>
-                                    </figure> 
+                                    </figure>
                                     <p>
-                                        <strong>{{result.title}}</strong> 
+                                        <strong>{{result.title}}</strong>
                                         <br>
                                     </p>
                                 </article>
@@ -71,11 +73,6 @@
                         </ul>
                     </div>
 
-                    <select>
-                        <option value="">10</option>
-                        <option value="">10</option>
-                        <option value="">10</option>
-                    </select>
                 </section>
 
 
@@ -85,46 +82,32 @@
                 </footer>
               </div>
             </div>
-            
-            
+
+
 
             <!-- Listado de albumes seleccionados - placeholder -->
 
             <div>
-                <h3>Ranking </h3>
                 <br />
-                <div class="box">
-                  <article class="media">
-                    <div class="media-left">
-                      <figure class="image is-64x64">
-                        <img src="https://img.discogs.com/mfl8Sd6VIiwlE9LhjQ8icNyyi2k=/300x300/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-367084-1263095553.jpeg.jpg" alt="Image">
-                      </figure>
-                    </div>
-                    <div class="media-content">
-                      <div class="content">
-                        <p>
-                          <strong>NIRVANA</strong>
-                          <br>
-                          NEVERMIND
-                        </p>
-                      </div>
-                    </div>
-                  </article>
-                </div>
+                <p class="title is-4">My ranking</p>
+                <br />
 
-                <div class="box">
+
+                <div class="box" v-for="(album, index) in selectedAlbums">
                   <article class="media">
+                      <span class="tag is-info is-rounded is-medium" style="margin-right: 6px;">{{index + 1}}</span>
+
                     <div class="media-left">
                       <figure class="image is-64x64">
-                        <img src="https://img.discogs.com/mfl8Sd6VIiwlE9LhjQ8icNyyi2k=/300x300/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-367084-1263095553.jpeg.jpg" alt="Image">
+                        <img :src="album.thumb" alt="Image">
                       </figure>
                     </div>
                     <div class="media-content">
                       <div class="content">
                         <p>
-                          <strong>NIRVANA</strong>
+                          <strong>{{album.title}}</strong>
                           <br>
-                          NEVERMIND
+                          {{album.year}}
                         </p>
                       </div>
                     </div>
@@ -132,12 +115,14 @@
                 </div>
             </div>
         </div>
-        
+
       </section>
 
-
+      <br />
     </div>
- 
+
+
+
 </template>
 
 
@@ -168,7 +153,7 @@
             console.log('Component created')
             console.log(api)
             // this.getResults();
-            
+
         },
 
         methods:{
@@ -185,7 +170,7 @@
                         var titles = [];
                         var data = [];
                         var results = response.data.results;
-                        
+
                         results.forEach(function(res){
                             console.log(res.title)
 
@@ -208,6 +193,12 @@
                     });
             },
 
+            openModal(){
+                this.q = '';
+                this.isOpenModal = true;
+
+            },
+
             selectAlbum(result){
                 console.log(result)
                 this.q = result.title;
@@ -218,7 +209,9 @@
             saveAlbum(){
                 console.log('go to save album ')
                 console.log(this.currentAlbumSelected)
+
                 this.selectedAlbums.push(this.currentAlbumSelected);
+                this.isOpenModal = false;
             }
         },
 

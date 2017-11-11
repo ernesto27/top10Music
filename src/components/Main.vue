@@ -1,40 +1,10 @@
 <template>
 
-    <div style="padding-left:10px">
-        <section class="hero is-info is-medium is-bold">
-            <div class="hero-head">
-              <nav class="navbar">
-                <div class="container">
-                  <div class="navbar-brand">
-                    <a class="navbar-item" href="../">
-                      <img src="http://bulma.io/images/bulma-type-white.png" alt="Logo">
-                    </a>
-                    <span class="navbar-burger burger" data-target="navbarMenu">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </span>
-                  </div>
-
-                </div>
-              </nav>
-            </div>
-            <div class="hero-body">
-              <div class="container has-text-centered">
-                <h1 class="title">
-                  TOP 10 ALBUMS OF THE YEAR
-                </h1>
-                <h2 class="subtitle">
-                    choose your selection below
-                </h2>
-              </div>
-            </div>
-      </section>
-
+    <div>
+      <header-element></header-element>
 
       <section class="container" style="margin-top:30px">
         <div>
-
             <button class="button is-primary" @click="openModal" >Agregar disco</button>
             <br />
             <p>Seleccionados: {{selectedAlbums.length}} de 10</p>
@@ -74,16 +44,12 @@
                     </div>
 
                 </section>
-
-
                 <footer class="modal-card-foot">
                   <button class="button is-success" :disabled="isDisabled" @click='saveAlbum'>Guardar</button>
                   <button class="button" @click='isOpenModal = false'>Cancel</button>
                 </footer>
               </div>
             </div>
-
-
 
             <!-- Listado de albumes seleccionados - placeholder -->
 
@@ -120,9 +86,6 @@
 
       <br />
     </div>
-
-
-
 </template>
 
 
@@ -150,10 +113,6 @@
         },
 
         created(){
-            console.log('Component created')
-            console.log(api)
-            // this.getResults();
-
         },
 
         methods:{
@@ -163,8 +122,6 @@
                 if(that.isLoading) return false;
 
                 that.isLoading = true;
-
-
                 axios.get(`${api.endpoint}?q=${this.q}&year=${api.year}&format=${api.format}&key=${api.key}&secret=${api.secret}&per_page=5`)
                     .then(function(response){
                         var titles = [];

@@ -5,16 +5,23 @@
 
       <section class="container" style="margin-top:30px">
         <div>
-            <button class="button is-primary" @click="openModal" >Agregar disco</button>
-            <br />
-            <p>Seleccionados: {{selectedAlbums.length}} de 10</p>
+            <button class="button is-primary is-medium"
+                    @click="openModal"
+                    :disabled="selectedAlbums.length >= 10 ? true : false"
+                    >Agregar disco</button>
+            <br /><br />
+            <div class="notification">Seleccionados: {{selectedAlbums.length}} de 10</div>
 
             <div class="modal is-activef " v-bind:class="{'is-active': isOpenModal}">
               <div class="modal-background"></div>
               <div class="modal-card">
                 <header class="modal-card-head">
                   <p class="modal-card-title">Selecciona un disco</p>
-                  <button class="delete" aria-label="close" @click='isOpenModal = false'></button>
+                  <button class="delete"
+                          aria-label="close"
+                          @click='isOpenModal = false'
+
+                          ></button>
                 </header>
                 <section class="modal-card-body">
                     <div class="autocomplete-input">
@@ -260,6 +267,9 @@ ul.options-list li:hover{
     background: rgba(56, 56, 56, 0.8);
 }
 
+.box:hover{
+    background: #efefef;
+}
 
 
 </style>

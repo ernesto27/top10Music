@@ -1,5 +1,5 @@
 <template>
-    <section class="hero is-info is-medium is-bold">
+    <section id="header-element" class="hero is-info is-medium is-bold">
         <div class="hero-head">
           <nav class="navbar">
             <div class="container">
@@ -36,3 +36,9 @@
 
     }
 </script>
+
+<style>
+#header-element{
+    background-image: url(http://www.thegoatseries.com/wp-content/uploads/2014/12/Classic_Rock_Album_Feature.jpg);
+}
+</style>

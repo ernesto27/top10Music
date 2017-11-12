@@ -267,6 +267,8 @@ ul.options-list li:hover{
     background: rgba(56, 56, 56, 0.8);
 }
 
+
+
 .box:hover{
     background: #efefef;
 }

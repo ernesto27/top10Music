@@ -5,10 +5,28 @@
 
       <section class="container" style="margin-top:30px">
         <div>
-            <button class="button is-primary is-medium"
-                    @click="openModal"
-                    :disabled="selectedAlbums.length >= 10 ? true : false"
-                    >Agregar disco</button>
+            <div class="field is-grouped">
+                <p class="control">
+                    <button class="button is-primary is-medium"
+                            @click="openModal"
+                            :disabled="selectedAlbums.length >= 10 ? true : false"
+                            >
+                            Agregar disco
+                    </button>
+                </p>
+
+                <p class="control">
+                    <button class="button is-primary is-medium"
+                            @click="saveAlbumsSelected"
+                            :disabled="selectedAlbums.length < 10 ? true : false"
+                            >
+                        Guardar
+                    </button>
+                </p>
+            </div>
+
+
+
             <br /><br />
             <div class="notification">Seleccionados: {{selectedAlbums.length}} de 10</div>
 
@@ -76,10 +94,8 @@
 
 
 <script>
-
-    // Crear formulario e ir mostrando resultados a medida que tipea
-
     import axios from 'axios'
+    import config from '../config'
     import api from '../api'
 
     export default{
@@ -99,6 +115,9 @@
         },
 
         created(){
+
+            api.init(config.firebase)
+            // api.saveAlbumsSelected();
         },
 
         methods:{
@@ -108,7 +127,7 @@
                 if(that.isLoading) return false;
 
                 that.isLoading = true;
-                axios.get(`${api.endpoint}?q=${this.q}&year=${api.year}&format=${api.format}&key=${api.key}&secret=${api.secret}&per_page=5`)
+                axios.get(`${config.discogs.endpoint}?q=${this.q}&year=${config.discogs.year}&format=${config.discogs.format}&key=${config.discogs.key}&secret=${config.discogs.secret}&per_page=5`)
                     .then(function(response){
                         var titles = [];
                         var data = [];
@@ -155,6 +174,10 @@
 
                 this.selectedAlbums.push(this.currentAlbumSelected);
                 this.isOpenModal = false;
+            },
+
+            saveAlbumsSelected(){
+                api.saveAlbumsSelected(this.selectedAlbums);
             }
         },
 

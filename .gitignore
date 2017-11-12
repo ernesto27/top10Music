@@ -14,4 +14,4 @@ test/unit/coverage
 *.njsproj
 *.sln
 
-src/api.js
+src/config.js

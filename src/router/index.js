@@ -18,9 +18,10 @@ export default new Router({
       component: Main
     },
     {
-      path: '/ranking/:id',
+      path: '/ranking/:uuid',
       name: 'ranking',
-      component: Ranking
+      component: Ranking,
+      props: true
     }
   ]
 })

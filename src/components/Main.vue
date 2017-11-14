@@ -94,9 +94,9 @@
 
 
 <script>
-    import axios from 'axios'
-    import config from '../config'
-    import api from '../api'
+    import axios from 'axios';
+    import config from '../config';
+    import api from '../api';
 
     export default{
         name: 'main',
@@ -116,7 +116,7 @@
 
         created(){
 
-            api.init(config.firebase)
+            api.init(config.firebase);
             // api.saveAlbumsSelected();
         },
 

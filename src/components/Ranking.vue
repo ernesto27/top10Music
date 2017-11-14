@@ -15,26 +15,23 @@
 </template>
 
 <script>
+    import config from '../config';
+    import api from '../api';
 
     export default{
-
+        props: ['uuid'],
         data(){
             return{
-                albums:[{
-                    id: 1,
-                    thumb:"https://img.discogs.com/Niv7xlgmzvCCOSJnVRx54cCdfBc=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-10723372-1503106437-4750.jpeg.jpg",
-                    title: 'steven wilson'
-
-                },{
-                    id: 2,
-                    thumb:"https://img.discogs.com/vONNE3G-rRTNTxdla1cYtyFnQpQ=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-10394779-1496599474-1491.jpeg.jpg",
-                    title: 'obituary'
-                }]
+                albums:[]
             }
         },
 
         created(){
+            var that = this;
+            api.getRankingAlbumsByUser(this.uuid, function(data){
+                that.albums = data;
 
+            });
         }
     }
 

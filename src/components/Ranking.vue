@@ -28,6 +28,7 @@
 
         created(){
             var that = this;
+            api.init(config.firebase);
             api.getRankingAlbumsByUser(this.uuid, function(data){
                 that.albums = data;
 

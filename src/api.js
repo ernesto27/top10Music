@@ -9,7 +9,6 @@ var api = {
     },
 
     saveAlbumsSelected(data){
-        console.log(this.database)
         this.database.ref().child('albums').push(data);
     },
 

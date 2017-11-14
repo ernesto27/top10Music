@@ -5,6 +5,17 @@
 
       <section class="container" style="margin-top:30px">
         <div>
+
+            <div class="columns">
+                <div class="column is-one-third">
+                    <div class="control">
+                      <input class="input is-medium"
+                             v-model="username"
+                             type="text" placeholder="Ingresa tu nombre">
+                    </div>
+                </div>
+            </div>
+
             <div class="field is-grouped">
                 <p class="control">
                     <button class="button is-primary is-medium"
@@ -24,6 +35,7 @@
                     </button>
                 </p>
             </div>
+
 
 
 
@@ -103,6 +115,7 @@
 
         data(){
             return{
+                username: '',
                 q: '',
                 results: [],
                 isLoading: false,

@@ -2,10 +2,13 @@
 var api = {
 
     database: null,
+    firebase: null,
 
     init(config){
-        firebase.initializeApp(config);
-        this.database = firebase.database();
+        if(!this.firebase){
+            this.firebase = firebase.initializeApp(config);
+        }
+        this.database = this.firebase.database();
     },
 
     saveAlbumsSelected(data){

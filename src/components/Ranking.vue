@@ -6,7 +6,7 @@
       <section class="container" style="margin-top:30px">
         <div>
 
-            <p class="title is-4">Ranking 2017 de ernesto</p>
+            <p class="title is-4">Ranking 2017 de {{ username }}</p>
             <ranking-list :albums="albums"></ranking-list>
 
         </div>
@@ -22,7 +22,8 @@
         props: ['uuid'],
         data(){
             return{
-                albums:[]
+                albums:[],
+                username: ''
             }
         },
 
@@ -31,7 +32,7 @@
             api.init(config.firebase);
             api.getRankingAlbumsByUser(this.uuid, function(data){
                 that.albums = data;
-
+                that.username = data[10].username;
             });
         }
     }

@@ -104,6 +104,20 @@
 
       </section>
 
+      <!-- MODAL RANKING REGISTRADO -->
+      <div class="modal" v-bind:class="{'is-active': isRankingSaved}">
+          <div class="modal-background"></div>
+          <div class="modal-content">
+              <article class="message is-success">
+                <div class="message-body">
+                    <p class="title is-3">Ranking guardado exitosamente!</p>
+                    <p><a v-bind:href="rankingURL">Ver ranking</a></p>
+                </div>
+              </article>
+          </div>
+          <button class="modal-close is-large" aria-label="close"></button>
+      </div>
+
       <br />
     </div>
 </template>
@@ -126,15 +140,17 @@
                 isOpenModal: false,
                 isDisabled: true,
                 isAlbumSelected: false,
+                isRankingSaved: false,
                 currentAlbumSelected: null,
-                selectedAlbums: []
+                selectedAlbums: [],
+                rankingKey: null
             }
         },
 
         created(){
 
             api.init(config.firebase);
-            // api.saveAlbumsSelected();
+            // console.log(api.saveAlbumsSelected({test: 'test'}));
             console.log(this.username.length)
         },
 
@@ -196,10 +212,13 @@
                 this.selectedAlbums.push({
                     username: this.username
                 });
-                api.saveAlbumsSelected(this.selectedAlbums);
 
+                this.rankingKey = api.saveAlbumsSelected(this.selectedAlbums);
+
+                this.isRankingSaved = true;
                 this.username = '';
                 this.selectedAlbums = [];
+
             }
         },
 
@@ -208,13 +227,19 @@
                 if(val.length < oldval.length){
                     this.isDisabled = true;
                 }
-                // this.isDisabled = true;
+
                 if(val.length < 3){
                     this.results = [];
                     return false;
                 }
-                console.log('do search')
+
                 this.getResults();
+            }
+        },
+
+        computed:{
+            rankingURL(){
+                return `/#/ranking/${this.rankingKey}`;
             }
         }
     }
@@ -224,78 +249,78 @@
 
 
 <style>
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-
-
-.autocomplete-input {
-  position: relative;
-  height: 300px;
-}
-
-ul.options-list {
-  display: flex;
-  flex-direction: column;
-  margin-top: -12px;
-  border: 1px solid #dbdbdb;
-  border-radius: 0 0 3px 3px;
-  position: absolute;
-  width: 100%;
-  overflow: hidden;
-}
-
-ul.options-list li {
-  width: 100%;
-  flex-wrap: wrap;
-  background: white;
-  margin: 0;
-  border-bottom: 1px solid #eee;
-  color: #363636;
-  padding: 7px;
-  cursor: pointer;
-}
-
-
-ul.options-list li.highlighted {
-  background: #f8f8f8
-}
-
-ul.options-list li:hover{
-    background: #e5e5e5;
-}
+    li {
+      display: inline-block;
+      margin: 0 10px;
+    }
 
 
 
-/** LIGHTBOX MARKUP **/
+    .autocomplete-input {
+      position: relative;
+      height: 300px;
+    }
 
-.lightbox {
-    /** Default lightbox to hidden */
-    display: block;
+    ul.options-list {
+      display: flex;
+      flex-direction: column;
+      margin-top: -12px;
+      border: 1px solid #dbdbdb;
+      border-radius: 0 0 3px 3px;
+      position: absolute;
+      width: 100%;
+      overflow: hidden;
+    }
 
-    /** Position and style */
-    position: fixed;
-    z-index: 999;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    top: 0;
-    left: 0;
-    background: rgba(56, 56, 56, 0.8);
-}
+    ul.options-list li {
+      width: 100%;
+      flex-wrap: wrap;
+      background: white;
+      margin: 0;
+      border-bottom: 1px solid #eee;
+      color: #363636;
+      padding: 7px;
+      cursor: pointer;
+    }
+
+
+    ul.options-list li.highlighted {
+      background: #f8f8f8
+    }
+
+    ul.options-list li:hover{
+        background: #e5e5e5;
+    }
 
 
 
-.box:hover{
-    background: #efefef;
-}
+    /** LIGHTBOX MARKUP **/
+
+    .lightbox {
+        /** Default lightbox to hidden */
+        display: block;
+
+        /** Position and style */
+        position: fixed;
+        z-index: 999;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        top: 0;
+        left: 0;
+        background: rgba(56, 56, 56, 0.8);
+    }
+
+
+
+    .box:hover{
+        background: #efefef;
+    }
 
 
 </style>

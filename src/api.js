@@ -9,7 +9,7 @@ var api = {
     },
 
     saveAlbumsSelected(data){
-        this.database.ref().child('albums').push(data);
+        return this.database.ref().child('albums').push(data).getKey();
     },
 
     getRankingAlbumsByUser(uuid, callback){

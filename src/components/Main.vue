@@ -29,7 +29,7 @@
                 <p class="control">
                     <button class="button is-primary is-medium"
                             @click="saveAlbumsSelected"
-                            :disabled="selectedAlbums.length < 10 ? true : false"
+                            :disabled="(selectedAlbums.length < 10 || username.length == 0) ? true : false"
                             >
                         Guardar
                     </button>
@@ -42,7 +42,7 @@
             <br /><br />
             <div class="notification">Seleccionados: {{selectedAlbums.length}} de 10</div>
 
-            <div class="modal is-activef " v-bind:class="{'is-active': isOpenModal}">
+            <div class="modal " v-bind:class="{'is-active': isOpenModal}">
               <div class="modal-background"></div>
               <div class="modal-card">
                 <header class="modal-card-head">
@@ -82,8 +82,12 @@
 
                 </section>
                 <footer class="modal-card-foot">
-                  <button class="button is-success" :disabled="isDisabled" @click='saveAlbum'>Guardar</button>
-                  <button class="button" @click='isOpenModal = false'>Cancel</button>
+                  <button class="button is-success"
+                         :disabled="isDisabled"
+                         @click='addAlbumToRanking'>Guardar</button>
+
+                  <button class="button"
+                          @click='isOpenModal = false'>Cancel</button>
                 </footer>
               </div>
             </div>
@@ -131,6 +135,7 @@
 
             api.init(config.firebase);
             // api.saveAlbumsSelected();
+            console.log(this.username.length)
         },
 
         methods:{
@@ -181,16 +186,20 @@
                 this.currentAlbumSelected = result;
             },
 
-            saveAlbum(){
+            addAlbumToRanking(){
                 console.log('go to save album ')
-                console.log(this.currentAlbumSelected)
-
                 this.selectedAlbums.push(this.currentAlbumSelected);
                 this.isOpenModal = false;
             },
 
             saveAlbumsSelected(){
+                this.selectedAlbums.push({
+                    username: this.username
+                });
                 api.saveAlbumsSelected(this.selectedAlbums);
+
+                this.username = '';
+                this.selectedAlbums = [];
             }
         },
 

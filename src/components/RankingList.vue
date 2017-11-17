@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="box" v-for="(album, index) in albums">
-          <article class="media" >
+          <article class="media" v-if="index < 10">
               <span class="tag is-info is-rounded is-medium" style="margin-right: 6px;">{{index + 1}}</span>
 
             <div class="media-left">

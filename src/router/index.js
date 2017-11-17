@@ -4,11 +4,13 @@ import Main from '@/components/Main'
 import Ranking from '@/components/Ranking'
 import HeaderElement from '@/components/HeaderElement'
 import RankingList from '@/components/RankingList'
+import RankingUsersList from '@/components/RankingUsersList'
 
 Vue.use(Router)
 
 Vue.component('headerElement', HeaderElement)
 Vue.component('RankingList', RankingList)
+Vue.component('RankingUsersList', RankingUsersList)
 
 export default new Router({
   routes: [

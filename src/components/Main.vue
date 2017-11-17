@@ -1,124 +1,128 @@
 <template>
 
     <div>
-      <header-element></header-element>
+        <header-element></header-element>
 
-      <section class="container" style="margin-top:30px">
-        <div>
-
+        <section class="container" style="margin-top:30px">
             <div class="columns">
-                <div class="column is-one-third">
+                <div class="column is-9">
                     <div class="control">
-                      <input class="input is-medium"
+                        <input class="input is-medium"
                              v-model="username"
                              type="text" placeholder="Ingresa tu nombre">
                     </div>
-                </div>
-            </div>
 
-            <div class="field is-grouped">
-                <p class="control">
-                    <button class="button is-primary is-medium"
-                            @click="openModal"
-                            :disabled="selectedAlbums.length >= 10 ? true : false"
-                            >
-                            Agregar disco
-                    </button>
-                </p>
-
-                <p class="control">
-                    <button class="button is-primary is-medium"
-                            @click="saveAlbumsSelected"
-                            :disabled="(selectedAlbums.length < 10 || username.length == 0) ? true : false"
-                            >
-                        Guardar
-                    </button>
-                </p>
-            </div>
-
-
-
-
-            <br /><br />
-            <div class="notification">Seleccionados: {{selectedAlbums.length}} de 10</div>
-
-            <div class="modal " v-bind:class="{'is-active': isOpenModal}">
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">Selecciona un disco</p>
-                  <button class="delete"
-                          aria-label="close"
-                          @click='isOpenModal = false'
-
-                          ></button>
-                </header>
-                <section class="modal-card-body">
-                    <div class="autocomplete-input">
-                        <p class="control has-icon has-icon-right">
-                            <input
-                                class="input is-large"
-                                placeholder="Search..."
-                                v-model="q"
-                            >
+                    <br />
+          
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <button class="button is-primary is-medium"
+                                    @click="openModal"
+                                    :disabled="selectedAlbums.length >= 10 ? true : false"
+                                    >
+                                    Agregar disco
+                            </button>
                         </p>
 
-                        <ul class="options-list" style="margin-top: 2px;">
-                            <li class="highlighted" v-for="result in results" @click="selectAlbum(result)">
-                                <article class="media">
-                                    <figure class="media-left">
-                                        <p class="image is-64x64">
-                                            <img :src="result.thumb">
-                                        </p>
-                                    </figure>
-                                    <p>
-                                        <strong>{{result.title}}</strong>
-                                        <br>
-                                    </p>
-                                </article>
-                            </li>
-                        </ul>
+                        <p class="control">
+                            <button class="button is-primary is-medium"
+                                    @click="saveAlbumsSelected"
+                                    :disabled="(selectedAlbums.length < 10 || username.length == 0) ? true : false"
+                                    >
+                                Guardar
+                            </button>
+                        </p>
                     </div>
 
-                </section>
-                <footer class="modal-card-foot">
-                  <button class="button is-success"
-                         :disabled="isDisabled"
-                         @click='addAlbumToRanking'>Guardar</button>
 
-                  <button class="button"
-                          @click='isOpenModal = false'>Cancel</button>
-                </footer>
-              </div>
-            </div>
 
-            <!-- Listado de albumes seleccionados - placeholder -->
-            <div>
-                <br />
-                <p class="title is-4">My ranking</p>
-                <br />
 
-                <ranking-list :albums="selectedAlbums"></ranking-list>
-            </div>
-        </div>
+                    <br /><br />
+                    <div class="notification">Seleccionados: {{selectedAlbums.length}} de 10</div>
 
-      </section>
+                    <div class="modal " v-bind:class="{'is-active': isOpenModal}">
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                            <p class="modal-card-title">Selecciona un disco</p>
+                            <button class="delete"
+                                    aria-label="close"
+                                    @click='isOpenModal = false'
 
-      <!-- MODAL RANKING REGISTRADO -->
-      <div class="modal" v-bind:class="{'is-active': isRankingSaved}">
-          <div class="modal-background"></div>
-          <div class="modal-content">
-              <article class="message is-success">
-                <div class="message-body">
-                    <p class="title is-3">Ranking guardado exitosamente!</p>
-                    <p><a v-bind:href="rankingURL">Ver ranking</a></p>
+                                    ></button>
+                            </header>
+                            <section class="modal-card-body">
+                                <div class="autocomplete-input">
+                                    <p class="control has-icon has-icon-right">
+                                        <input
+                                            class="input is-large"
+                                            placeholder="Search..."
+                                            v-model="q"
+                                        >
+                                    </p>
+
+                                    <ul class="options-list" style="margin-top: 2px;">
+                                        <li class="highlighted" v-for="result in results" @click="selectAlbum(result)">
+                                            <article class="media">
+                                                <figure class="media-left">
+                                                    <p class="image is-64x64">
+                                                        <img :src="result.thumb">
+                                                    </p>
+                                                </figure>
+                                                <p>
+                                                    <strong>{{result.title}}</strong>
+                                                    <br>
+                                                </p>
+                                            </article>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </section>
+                            <footer class="modal-card-foot">
+                            <button class="button is-success"
+                                    :disabled="isDisabled"
+                                    @click='addAlbumToRanking'>Guardar</button>
+
+                            <button class="button"
+                                    @click='isOpenModal = false'>Cancel</button>
+                            </footer>
+                        </div>
+                    </div>
+
+                    <!-- Listado de albumes seleccionados - placeholder -->
+                    <div>
+                        <br />
+                        <p class="title is-4">My ranking</p>
+                        <br />
+
+                        <ranking-list :albums="selectedAlbums"></ranking-list>
+                    </div>
                 </div>
-              </article>
-          </div>
-          <button class="modal-close is-large" aria-label="close"></button>
-      </div>
 
-      <br />
+                <!-- MODAL RANKING REGISTRADO -->
+                <div class="modal" v-bind:class="{'is-active': isRankingSaved}">
+                    <div class="modal-background"></div>
+                    <div class="modal-content">
+                        <article class="message is-success">
+                            <div class="message-body">
+                                <p class="title is-3">Ranking guardado exitosamente!</p>
+                                <p><a v-bind:href="rankingURL">Ver ranking</a></p>
+                            </div>
+                        </article>
+                    </div>
+                    <button class="modal-close is-large" aria-label="close"></button>
+                </div>
+
+                <div class="column is-3">
+                    <ranking-users-list :usersRanking="usersRanking" ></ranking-users-list>
+                </div>
+
+
+            </div>
+
+            
+        </section>
     </div>
 </template>
 
@@ -143,15 +147,17 @@
                 isRankingSaved: false,
                 currentAlbumSelected: null,
                 selectedAlbums: [],
-                rankingKey: null
+                rankingKey: null,
+                usersRanking: []
             }
         },
 
         created(){
-
             api.init(config.firebase);
-            // console.log(api.saveAlbumsSelected({test: 'test'}));
-            console.log(this.username.length)
+
+            // Obtenemos rankings de users
+            this.usersRanking.push({ url: 'url1'});
+            this.usersRanking.push({ url: 'url2'});
         },
 
         methods:{
@@ -249,15 +255,7 @@
 
 
 <style>
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
 
-    li {
-      display: inline-block;
-      margin: 0 10px;
-    }
 
 
 

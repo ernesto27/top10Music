@@ -22,6 +22,17 @@ var api = {
                 .then(function(snapshot){
                     callback(snapshot.val());
                 });
+    },
+
+    getUsersRanking(callback){
+        this.database
+            .ref('/albums')
+            .once('value')
+            .then(function(snapshot){
+                console.log(snapshot)
+                callback(snapshot);
+              
+            });
     }
 
 

@@ -155,9 +155,18 @@
         created(){
             api.init(config.firebase);
 
-            // Obtenemos rankings de users
-            this.usersRanking.push({ url: 'url1'});
-            this.usersRanking.push({ url: 'url2'});
+            var that = this;
+            api.getUsersRanking(function(snapshot){
+                snapshot.forEach(value => {   
+                    var item = value.val();    
+                    console.log(value.key)
+                    that.usersRanking.push({
+                        username: item[10].username, 
+                        url: `/#/ranking/${value.key}`
+                    });
+                   
+                });
+            });
         },
 
         methods:{

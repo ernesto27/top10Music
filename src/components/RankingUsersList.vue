@@ -3,7 +3,7 @@
         <p class="is-size-3">Rankings generados</p>
         <ul>
             <li v-for="ranking in usersRanking">
-                <a>{{ ranking.url }}</a>
+                <a :href="ranking.url">{{ ranking.username }}</a>
             </li>
         </ul>
     </div>  

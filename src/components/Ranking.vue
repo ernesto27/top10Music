@@ -5,10 +5,9 @@
 
       <section class="container" style="margin-top:30px">
         <div>
-
-            <p class="title is-4">Ranking 2017 de {{ username }}</p>
+            <p style="text-align:center" v-if="!username"><img src="static/ajax-loader.gif" /></p>
+            <p class="title is-4" v-if="username">Ranking 2017 de {{ username }}</p>
             <ranking-list :albums="albums"></ranking-list>
-
         </div>
       </section>
     </div>

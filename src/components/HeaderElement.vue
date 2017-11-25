@@ -16,7 +16,7 @@
           </nav>
         </div>
         <div class="hero-body">
-          <a href="/">
+          <a href="">
             <div class="container has-text-centered" 
                 style="width: max-content;background: #000000;padding: 16px;opacity: 0.8">
               <h1 class="title">

@@ -162,7 +162,7 @@
                     console.log(value.key)
                     that.usersRanking.push({
                         username: item[10].username, 
-                        url: `/#/ranking/${value.key}`
+                        url: `#/ranking/${value.key}`
                     });
                    
                 });
@@ -254,7 +254,7 @@
 
         computed:{
             rankingURL(){
-                return `/#/ranking/${this.rankingKey}`;
+                return `#/ranking/${this.rankingKey}`;
             }
         }
     }

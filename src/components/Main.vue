@@ -57,7 +57,9 @@
                                         <input
                                             class="input is-large"
                                             placeholder="Search..."
+                                            ref="search"
                                             v-model="q"
+                                        
                                         >
                                     </p>
 
@@ -139,6 +141,7 @@
             return{
                 username: '',
                 q: '',
+                lastSearchQuery: '',
                 results: [],
                 isLoading: false,
                 isOpenModal: false,
@@ -172,40 +175,25 @@
         methods:{
             getResults(){
                 var that = this;
-
+                var currentQuery = '';
                 if(that.isLoading) return false;
 
                 that.isLoading = true;
-                axios.get(`${config.discogs.endpoint}?q=${this.q}&year=${config.discogs.year}&format=${config.discogs.format}&key=${config.discogs.key}&secret=${config.discogs.secret}&per_page=5`)
+                currentQuery = that.q;
+                axios.get(`${config.discogs.endpoint}?q=${that.q}&year=${config.discogs.year}&format=${config.discogs.format}&key=${config.discogs.key}&secret=${config.discogs.secret}&per_page=5`)
                     .then(function(response){
-                        var titles = [];
-                        var data = [];
-                        var results = response.data.results;
-
-                        results.forEach(function(res){
-                            console.log(res.title)
-
-                            var isRepeat = false;
-                            for( var x = 0; x <= titles.length; x++){
-                                if(titles[x] == res.title){
-                                    isRepeat = true;
-                                    break;
-                                }
-                            };
-                            if(!isRepeat){
-                                titles.push(res.title);
-                                data.push(res)
-                            }
-                        })
-
-                        that.results = data;
-
+                        that.results = that.removeDuplicates(response.data.results);
                         that.isLoading = false;
+
+                        if(that.q !== currentQuery){
+                            that.getResults();
+                        }
                     });
             },
 
             openModal(){
                 this.q = '';
+                this.$refs.search.focus();
                 this.isOpenModal = true;
 
             },
@@ -233,7 +221,26 @@
                 this.isRankingSaved = true;
                 this.username = '';
                 this.selectedAlbums = [];
+            },
 
+            removeDuplicates(results){
+                var titles = [];
+                var data = [];
+                
+                results.forEach(function(res){
+                    var isRepeat = false;
+                    for( var x = 0; x <= titles.length; x++){
+                        if(titles[x] == res.title){
+                            isRepeat = true;
+                            break;
+                        }
+                    };
+                    if(!isRepeat){
+                        titles.push(res.title);
+                        data.push(res)
+                    }
+                });
+                return data;
             }
         },
 

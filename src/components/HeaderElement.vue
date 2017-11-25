@@ -4,9 +4,7 @@
           <nav class="navbar">
             <div class="container">
               <div class="navbar-brand">
-                <a class="navbar-item" href="../">
-                  <img src="http://bulma.io/images/bulma-type-white.png" alt="Logo">
-                </a>
+              
                 <span class="navbar-burger burger" data-target="navbarMenu">
                   <span></span>
                   <span></span>
@@ -18,15 +16,19 @@
           </nav>
         </div>
         <div class="hero-body">
-          <div class="container has-text-centered">
-            <h1 class="title">
-              TOP 10 ALBUMS OF THE YEAR
-            </h1>
-            <h2 class="subtitle">
-                choose your selection below
-            </h2>
-          </div>
+          <a href="/">
+            <div class="container has-text-centered" 
+                style="width: max-content;background: #000000;padding: 16px;opacity: 0.8">
+              <h1 class="title">
+                TOP 10 ALBUMS
+              </h1>
+              <h2 class="subtitle">
+                  Selecciona tus 10 discos favoritos del 2017
+              </h2>
+            </div>
+          </a>
         </div>
+        
     </section>
 </template>
 
@@ -38,7 +40,5 @@
 </script>
 
 <style>
-#header-element{
-    background-image: url(http://www.thegoatseries.com/wp-content/uploads/2014/12/Classic_Rock_Album_Feature.jpg);
-}
+
 </style>

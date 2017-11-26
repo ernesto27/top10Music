@@ -5,11 +5,13 @@
 
         <section class="container" style="margin-top:30px">
             <div class="columns">
-                <div class="column is-9">
+                <div class="column is-9" style="margin-top:20px">
                     <div class="control">
-                        <input class="input is-medium"
-                             v-model="username"
-                             type="text" placeholder="Ingresa tu nombre">
+                        <input 
+                            id="usernameinput"
+                            class="input is-medium"
+                            v-model="username" 
+                            type="text" placeholder="Ingresa tu nombre">
                     </div>
 
                     <br />
@@ -34,9 +36,6 @@
                         </p>
                     </div>
 
-
-
-
                     <br /><br />
                     <div class="notification">Seleccionados: {{selectedAlbums.length}} de 10</div>
 
@@ -48,7 +47,6 @@
                             <button class="delete"
                                     aria-label="close"
                                     @click='isOpenModal = false'
-
                                     ></button>
                             </header>
                             <section class="modal-card-body">
@@ -108,7 +106,7 @@
                     <div class="modal-content">
                         <article class="message is-success">
                             <div class="message-body">
-                                <p class="title is-3">Ranking guardado exitosamente!</p>
+                                <p class="title is-4">Ranking guardado exitosamente!</p>
                                 <p><a v-bind:href="rankingURL">Ver ranking</a></p>
                             </div>
                         </article>
@@ -116,11 +114,15 @@
                     <button class="modal-close is-large" aria-label="close"></button>
                 </div>
 
+
+                <!-- SIDEBAR RIGHT -->
                 <div class="column is-3">
+                    
                     <ranking-users-list :usersRanking="usersRanking" ></ranking-users-list>
+                    <albums-chosen />        
                 </div>
 
-
+            
             </div>
 
             
